@@ -3,81 +3,106 @@ const fs = require("fs");
 const util = require("util");
 
 const writeFileAsync = util.promisify(fs.writeFile);
+const appendfileasync = util.promisify(fs.appendFileSync);
 
-function promptUser() {
+
+// write head //
+
+function start() {
+
+fs.writeFile('index.html', 
+
+
+`
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <link rel="stylesheet" href="style.css">
+
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <title>Document</title>
+ </head>
+ <body>`,
+function (err) {
+  if (err) throw err;
+
+});
+}
+
+start();
+
+// end head write
+
+
+
+ function promptmanager() {
   return inquirer.prompt([
     {
       type: "input",
-      name: "name",
-      message: "What is your name?"
+      name: "managername",
+      message: "What is the name of the manager?" 
     },
     {
       type: "input",
       name: "location",
-      message: "Where are you from?"
+      message: "What is the managers office number"
     },
     {
       type: "input",
       name: "hobby",
-      message: "What is your favorite hobby?"
+      message: "What is your id number?"
     },
     {
-      type: "input",
-      name: "food",
-      message: "What is your favorite food?"
-    },
-    {
-      type: "input",
-      name: "github",
-      message: "Enter your GitHub Username"
-    },
-    {
-      type: "input",
-      name: "linkedin",
-      message: "Enter your LinkedIn URL."
-    }
-  ]);
-}
+      type: "confirm",
+      name: "add",
+      message: "Would you like to add another team member?"
+    }])
+  .then(answers => {
+    if (responses.add = yes) {
+      console.log("You are probably smart");
+  }
+  else if (responses.add = no) {
+      console.log("You are probably well informed");
+  }
+},
+  
+  
 
-function generateHTML(answers) {
-  return `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <title>Document</title>
-</head>
-<body>
-  <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Hi! My name is ${answers.name}</h1>
-    <p class="lead">I am from ${answers.location}.</p>
-    <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-    <ul class="list-group">
-      <li class="list-group-item">My GitHub username is ${answers.github}</li>
-      <li class="list-group-item">LinkedIn: ${answers.linkedin}</li>
-    </ul>
-  </div>
-</div>
-</body>
-</html>`;
-}
+  
 
-async function init() {
-  console.log("hi")
+
+function generatemanager(answers) {
+   return `
+ 
+   <div class="jumbotron jumbotron-fluid">
+   <div class="container">
+     <h1 class="display-4">${answers.managername}</h1>
+     <p class="lead">My office number is  ${answers.location}.</p>
+     <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
+     <ul class="list-group">
+       <li class="list-group-item">LinkedIn: ${answers.linkedin}</li>
+     </ul>
+   </div>
+ </div>
+ </body>
+ </html>`;
+ },
+ 
+ async function card() {
+  console.log("test")
   try {
-    const answers = await promptUser();
+    const answers = await promptmanager();
 
-    const html = generateHTML(answers);
+    const html = generatemanager(answers);
 
-    await writeFileAsync("index.html", html);
+    await appendfileasync("index.html", html);
 
-    console.log("Successfully wrote to index.html");
+    console.log("Successfully appended to index.html");
   } catch(err) {
     console.log(err);
   }
-}
+},
 
-init();
+card();
