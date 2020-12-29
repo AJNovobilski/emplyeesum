@@ -5,6 +5,45 @@ const util = require("util");
 const writeFileAsync = util.promisify(fs.writeFile);
 const appendfileasync = util.promisify(fs.appendFileSync);
 
+// Function Definitions / Place In Folder For Cleaner File
+
+
+
+  
+
+async function card() {
+ console.log("test")
+ try {
+   const answers = await promptmanager();
+
+   function generatemanager(answers) {
+    return `
+  
+    <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">${answers.managername}</h1>
+      <p class="lead">My office number is  ${answers.office}.</p>
+      <ul class="list-group">
+        <li class="list-group-item">LinkedIn: ${answers.linkedin}</li>
+      </ul>
+    </div>
+  </div>
+  </body>
+  </html>`;
+  }
+
+   const html = generatemanager(answers);
+
+   await appendfileasync("index.html", html);
+
+   console.log("Successfully appended to index.html");
+ } catch(err) {
+   console.log(err);
+ }
+}
+
+
+
 
 // write head //
 
@@ -29,50 +68,18 @@ function (err) {
 
 });
 }
-
-
-
 start();
-// Function Definitions / Place In Folder For Cleaner File
-function generatemanager(answers) {
-  return `
 
-  <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">${answers.managername}</h1>
-    <p class="lead">My office number is  ${answers.office}.</p>
-    <ul class="list-group">
-      <li class="list-group-item">LinkedIn: ${answers.linkedin}</li>
-    </ul>
-  </div>
-</div>
-</body>
-</html>`;
-}
 
-function generateengineer(answers) {
-  return `
 
-  <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">${answers.managername}</h1>
-    <p class="lead">My office number is  ${answers.office}.</p>
-    <ul class="list-group">
-      <li class="list-group-item">LinkedIn: ${answers.linkedin}</li>
-    </ul>
-  </div>
-</div>
-</body>
-</html>`;
-}
 
-// end head write
+// end head write / begin master prompt
 
 
 
 var questions = 12345
 
-function oneprompt(){
+function promptmanager(){
 inquirer
   .prompt([
     {
@@ -98,29 +105,18 @@ inquirer
     }
   ])
   .then(answers => {
+
+
     
 console.log(answers)
 
 if(answers.add === true)
-generatemanager()
 
 
-async function card() {
- console.log("test")
- try {
-   const answers = await promptmanager();
 
-   const html = generatemanager(answers);
+card();
 
-   await appendfileasync("index.html", html);
-
-   console.log("Successfully appended to index.html");
- } catch(err) {
-   console.log(err);
- }
-}
-
-card();if(answers.add === false)
+if(answers.add === false)
 console.log('awefoij')
 
 
@@ -133,4 +129,6 @@ console.log('awefoij')
     }
   });
 }
-  oneprompt();
+  promptmanager();
+
+  
